@@ -1,0 +1,25 @@
+from pgmpy.models import DynamicBayesianNetwork
+from pgmpy.factors.discrete import TabularCPD
+from pgmpy.inference import DBNInference
+
+# Crear el modelo de la Red Bayesiana Dinámica
+model = DynamicBayesianNetwork()
+
+# Definir las variables aleatorias y sus relaciones temporales
+# En este ejemplo, tenemos dos variables: A y B en dos instantes de tiempo (t1 y t2).
+model.add_edge('A_t1', 'A_t2')
+model.add_edge('B_t1', 'B_t2')
+
+# Definir las distribuciones condicionales de probabilidad (CPD) para las variables en t1
+cpd_a_t1 = TabularCPD(variable='A_t1', variable_card=2, values=[[0.7], [0.3]])
+cpd_b_t1 = TabularCPD(variable='B_t1', variable_card=2, values=[[0.6], [0.4]])
+
+# Definir las CPD para las variables en t2
+cpd_a_t2 = TabularCPD(variable='A_t2', variable_card=2, values=[[0.8, 0.2], [0.1, 0.9]], evidence=['A_t1'], evidence_card=[2])
+cpd_b_t2 = TabularCPD(variable='B_t2', variable_card=2, values=[[0.7, 0.3], [0.5, 0.5]], evidence=['B_t1'], evidence_card=[2])
+
+# Asociar las CPD con las variables en el modelo
+model.add_cpds(cpd_a_t1, cpd_b_t1, cpd_a_t2, cpd_b_t2)
+
+# Verificar si el modelo es válido
+assert model.check_model()
