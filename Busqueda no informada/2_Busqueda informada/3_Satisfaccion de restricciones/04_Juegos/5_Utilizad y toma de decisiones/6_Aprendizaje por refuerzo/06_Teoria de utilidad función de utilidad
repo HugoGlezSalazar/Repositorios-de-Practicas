@@ -1,0 +1,25 @@
+def funcion_de_utilidad(cantidad_bienes, precio, elasticidad=1.0):
+    """
+    Calcula la función de utilidad para un consumidor dado un conjunto de bienes y precios.
+
+    Args:
+    cantidad_bienes (list): Lista de cantidades de bienes consumidas.
+    precio (list): Lista de precios de los bienes.
+    elasticidad (float): Parámetro de elasticidad.
+
+    Returns:
+    float: Valor de la función de utilidad.
+    """
+    if len(cantidad_bienes) != len(precio):
+        raise ValueError("Las listas de cantidades y precios deben tener la misma longitud.")
+
+    utilidad = 0.0
+    for i in range(len(cantidad_bienes)):
+        utilidad += cantidad_bienes[i] ** elasticidad / precio[i]
+
+    return utilidad
+
+# Ejemplo de uso
+cantidades = [2, 3]  # Cantidad de dos bienes
+precios = [1, 2]     # Precios de los dos bienes
+elasticidad = 1.5   # Elasticidad de la función de utilidad
