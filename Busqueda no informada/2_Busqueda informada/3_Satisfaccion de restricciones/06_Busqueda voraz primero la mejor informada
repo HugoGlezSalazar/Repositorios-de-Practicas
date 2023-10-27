@@ -1,0 +1,33 @@
+def busqueda_voraz_primero_el_mejor(estado_inicial, es_objetivo, generar_sucesores, funcion_evaluacion):
+    frontera = [(estado_inicial, 0)]  # Cola de prioridad con tuplas (estado, valor)
+    
+    while frontera:
+        estado_actual, valor_actual = frontera.pop(0)  # Tomar el estado con el valor más alto
+        if es_objetivo(estado_actual):
+            return estado_actual  # Hemos encontrado el estado objetivo
+        
+        sucesores = generar_sucesores(estado_actual)
+        for sucesor in sucesores:
+            valor_sucesor = funcion_evaluacion(sucesor)
+            frontera.append((sucesor, valor_sucesor))
+            frontera.sort(key=lambda x: x[1])  # Ordenar la frontera por valor
+    
+    return None  # No se encontró una solución
+
+# Ejemplo de uso
+def es_objetivo(estado):
+    return estado == 8
+
+def generar_sucesores(estado):
+    return [estado + 1, estado + 2]
+
+def funcion_evaluacion(estado):
+    return abs(estado - 8)
+
+estado_inicial = 0
+solucion = busqueda_voraz_primero_el_mejor(estado_inicial, es_objetivo, generar_sucesores, funcion_evaluacion)
+
+if solucion is not None:
+    print(f"Solución encontrada: {solucion}")
+else:
+       print("No se encontró una solución.")
