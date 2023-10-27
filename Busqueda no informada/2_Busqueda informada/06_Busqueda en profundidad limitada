@@ -1,0 +1,21 @@
+def ldfs(graph, start, limit, depth=0):
+    if depth > limit:
+        return
+    
+    print(start, end=' ')
+
+    for neighbor in graph[start]:
+        ldfs(graph, neighbor, limit, depth + 1)
+
+# Ejemplo de un grafo representado como un diccionario de adyacencia
+graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D', 'E'],
+    'C': ['A', 'F'],
+    'D': ['B'],
+    'E': ['B', 'F'],
+    'F': ['C', 'E']
+}
+
+print("Búsqueda en Profundidad Limitada (LDFS):")
+ldfs(graph, 'A', 2)  # Limitar la profundidad a 2
